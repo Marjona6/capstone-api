@@ -131,9 +131,9 @@ $(document).ready(function () {
             var htmlOutput = '';
             htmlOutput += "Photos taken by the PLACEHOLDER rover";
             $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
-                if ((resultsArrayKey + 1) % 3 == 0) {
-                    htmlOutput += "<div class='row'>";
-                }
+//                if ((resultsArrayKey + 1) % 3 == 0) {
+//                    htmlOutput += "<div class='row'>";
+//                }
                 htmlOutput += "<li>";
                 htmlOutput += "<div class='col-4 box'>";
                 console.log(resultsArrayValue.earth_date);
@@ -144,9 +144,9 @@ $(document).ready(function () {
                 htmlOutput += "</a>"; // close link to full size photo
                 htmlOutput += "</div>";
                 htmlOutput += "</li>";
-                if ((resultsArrayKey + 1) % 3 == 0) {
-                    htmlOutput += "</div>";
-                }
+//                if ((resultsArrayKey + 1) % 3 == 0) {
+    //                    htmlOutput += "</div>";
+    //                }
             });
             $("#js-search-results ul").html(htmlOutput);
         }
