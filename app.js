@@ -39,7 +39,8 @@ var roverInfo = [
         "current_location": "Gale Crater, Mars",
         "about": "The Mars Science Laboratory mission\'s Curiosity rover, the most technologically advanced rover ever built, landed in Mars\' Gale Crater the evening of Aug. 5, 2012 PDT (morning of Aug. 6 EDT) using a series of complicated landing maneuvers never before attempted. The specialized landing sequence, which employed a giant parachute, a jet-controlled descent vehicle and a bungee-like apparatus called a \"sky crane,\" was devised because tested landing techniques used during previous rover missions could not safely accommodate the much larger and heavier rover.</p><p>Curiosity's mission is to determine whether the Red Planet ever was, or is, habitable to microbial life. The rover, which is about the size of a MINI Cooper, is equipped with 17 cameras and a robotic arm containing a suite of specialized laboratory-like tools and instruments."
     }
-]
+];
+var selectedRover = "Spirit";
 $(document).ready(function () {
     displayRoverInfo(roverInfo);
     $('#js-curiosity-search').hide();
@@ -61,8 +62,9 @@ $(document).ready(function () {
             htmlOutput += "<p>" + roverInfoValue.about + "</p>"; // display "about" info
             htmlOutput += "<form action='#' class='js-rover-select'>"; // open form with js targeting for rover selection
             var lowerCaseRoverName = roverInfoValue.name.toLowerCase();
-            htmlOutput += "<button type='submit' value='" + lowerCaseRoverName + "'>Select</button>";
-            //            console.log(lowerCaseRoverName);
+            htmlOutput += "<input type='hidden' value='" + lowerCaseRoverName + "' class='inputRoverName'>";
+            htmlOutput += "<button type='submit'>Select</button>";
+            //                        console.log(lowerCaseRoverName);
             htmlOutput += "</form>"; // close form
             htmlOutput += "</div>";
             htmlOutput += "</li>";
@@ -72,9 +74,14 @@ $(document).ready(function () {
 
     $('.js-rover-select').submit(function (event) {
         event.preventDefault();
+        selectedRover = $(this).parent().find(".inputRoverName").val();
+        console.log(selectedRover);
         $('#js-rover-info').hide();
-        $('#js-curiosity-search').show();
-        console.log(event.target);
+        $('#js-curiosity-search').hide();
+        $('#js-opportunity-search').hide();
+        $('#js-spirit-search').hide();
+        $('#js-' + selectedRover + '-search').show();
+        //        console.log(event.target);
     });
 
 
@@ -84,18 +91,19 @@ $(document).ready(function () {
         $('#js-curiosity-search').hide();
         $('#js-opportunity-search').hide();
         $('#js-spirit-search').hide();
-        var userEarthDate = $('#js-earth-date-query').val();
-        var userEarthDate = "2015-04-12";
+
+        var userEarthDate = $(this).parent().find('.js-earth-date-query').val();
+        //        var userEarthDate = "2015-04-12";
         //console.log(userEarthDate);
-        var userCamera = $('#js-camera-query').val();
-        var userCamera = "MAST";
+        var userCamera = $(this).parent().find('.js-camera-query').val();
+        //        var userCamera = "MAST";
         //console.log(userCamera);
         getResults(userEarthDate, userCamera);
         // step 2: make API call
 
         function getResults(desiredEarthDate, desiredCamera) {
-            //console.log(desiredCamera);
-            //console.log(desiredEarthDate);
+            console.log(desiredCamera);
+            console.log(desiredEarthDate);
 
             /* Update all the parameters for your API test*/
             var params = {
@@ -105,7 +113,7 @@ $(document).ready(function () {
             };
             var result = $.ajax({
                     /* update API end point */
-                    url: "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos",
+                    url: "https://api.nasa.gov/mars-photos/api/v1/rovers/" + selectedRover + "/photos",
                     data: params,
                     //dataType: "json",
                     /*set the call type GET / POST*/
@@ -129,11 +137,11 @@ $(document).ready(function () {
 
         function displaySearchResults(resultsArray) {
             var htmlOutput = '';
-            htmlOutput += "Photos taken by the PLACEHOLDER rover";
+            htmlOutput += "Photos taken by the " + selectedRover.toUpperCase() + " rover";
             $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
-//                if ((resultsArrayKey + 1) % 3 == 0) {
-//                    htmlOutput += "<div class='row'>";
-//                }
+                //                if ((resultsArrayKey + 1) % 3 == 0) {
+                //                    htmlOutput += "<div class='row'>";
+                //                }
                 htmlOutput += "<li>";
                 htmlOutput += "<div class='col-4 box'>";
                 console.log(resultsArrayValue.earth_date);
@@ -144,9 +152,9 @@ $(document).ready(function () {
                 htmlOutput += "</a>"; // close link to full size photo
                 htmlOutput += "</div>";
                 htmlOutput += "</li>";
-//                if ((resultsArrayKey + 1) % 3 == 0) {
-    //                    htmlOutput += "</div>";
-    //                }
+                //                if ((resultsArrayKey + 1) % 3 == 0) {
+                //                    htmlOutput += "</div>";
+                //                }
             });
             $("#js-search-results ul").html(htmlOutput);
         }
