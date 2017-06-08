@@ -27,6 +27,10 @@ ul {
     list-style: none;
 }
 
+.detail {
+    font-size: 0.75rem;
+}
+
 .container {
     /*
     margin: 2rem;
@@ -36,6 +40,7 @@ ul {
     text-align: center;
     padding: 1rem;
     display: inline-block;
+    width: 100%
 }
 
 .box {

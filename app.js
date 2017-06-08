@@ -11,7 +11,8 @@ var roverInfo = [
         "image": "https://www.jpl.nasa.gov/missions/web/mer.jpg",
         "destination": "Gusev Crater, Mars",
         "current_location": "Troy, Mars",
-        "about": "One of two rovers launched in 2003 to explore Mars and search for signs of past life, Spirit far outlasted her planned 90-day mission. Among her myriad discoveries, Spirit found evidence that Mars was once much wetter than it is today and helped scientists better understand the Martian wind.</p><p>In May 2009, the rover became embedded in soft soil at a site called \"Troy\" with only five working wheels to aid in the rescue effort. After months of testing and carefully planned maneuvers, NASA ended efforts to free the rover and eventually ended the mission on May 25, 2011."
+        "about": "One of two rovers launched in 2003 to explore Mars and search for signs of past life, Spirit far outlasted her planned 90-day mission. Among her myriad discoveries, Spirit found evidence that Mars was once much wetter than it is today and helped scientists better understand the Martian wind.</p><p>In May 2009, the rover became embedded in soft soil at a site called \"Troy\" with only five working wheels to aid in the rescue effort. After months of testing and carefully planned maneuvers, NASA ended efforts to free the rover and eventually ended the mission on May 25, 2011.",
+        "about_source": "https://www.jpl.nasa.gov/missions/mars-exploration-rover-spirit-mer/"
     },
     {
         "name": "Opportunity",
@@ -24,7 +25,8 @@ var roverInfo = [
         "image": "https://www.jpl.nasa.gov/missions/web/mer.jpg",
         "destination": "Terra Meridiani, Mars",
         "current_location": "Endeavour Crater, Mars",
-        "about": "Opportunity was the second of the two rovers launched in 2003 to land on Mars and begin traversing the Red Planet in search of signs of past life. The rover is still actively exploring the Martian terrain, having far outlasted her planned 90-day mission.</p><p>Since landing on Mars in 2004, Opportunity has made a number of discoveries about the Red Planet including dramatic evidence that long ago at least one area of Mars stayed wet for an extended period and that conditions could have been suitable for sustaining microbial life."
+        "about": "Opportunity was the second of the two rovers launched in 2003 to land on Mars and begin traversing the Red Planet in search of signs of past life. The rover is still actively exploring the Martian terrain, having far outlasted her planned 90-day mission.</p><p>Since landing on Mars in 2004, Opportunity has made a number of discoveries about the Red Planet including dramatic evidence that long ago at least one area of Mars stayed wet for an extended period and that conditions could have been suitable for sustaining microbial life.",
+        "about_source": "https://www.jpl.nasa.gov/missions/mars-exploration-rover-opportunity-mer/"
     },
     {
         "name": "Curiosity",
@@ -37,7 +39,8 @@ var roverInfo = [
         "image": "https://www.jpl.nasa.gov/spaceimages/images/wallpaper/PIA14156-1920x1200.jpg",
         "destination": "Mars",
         "current_location": "Gale Crater, Mars",
-        "about": "The Mars Science Laboratory mission\'s Curiosity rover, the most technologically advanced rover ever built, landed in Mars\' Gale Crater the evening of Aug. 5, 2012 PDT (morning of Aug. 6 EDT) using a series of complicated landing maneuvers never before attempted. The specialized landing sequence, which employed a giant parachute, a jet-controlled descent vehicle and a bungee-like apparatus called a \"sky crane,\" was devised because tested landing techniques used during previous rover missions could not safely accommodate the much larger and heavier rover.</p><p>Curiosity's mission is to determine whether the Red Planet ever was, or is, habitable to microbial life. The rover, which is about the size of a MINI Cooper, is equipped with 17 cameras and a robotic arm containing a suite of specialized laboratory-like tools and instruments."
+        "about": "The Mars Science Laboratory mission\'s Curiosity rover, the most technologically advanced rover ever built, landed in Mars\' Gale Crater the evening of Aug. 5, 2012 PDT (morning of Aug. 6 EDT) using a series of complicated landing maneuvers never before attempted. The specialized landing sequence, which employed a giant parachute, a jet-controlled descent vehicle and a bungee-like apparatus called a \"sky crane,\" was devised because tested landing techniques used during previous rover missions could not safely accommodate the much larger and heavier rover.</p><p>Curiosity's mission is to determine whether the Red Planet ever was, or is, habitable to microbial life. The rover, which is about the size of a MINI Cooper, is equipped with 17 cameras and a robotic arm containing a suite of specialized laboratory-like tools and instruments.",
+        "about_source": "https://www.jpl.nasa.gov/missions/mars-science-laboratory-curiosity-rover-msl/"
     }
 ];
 var selectedRover = "Spirit";
@@ -53,6 +56,7 @@ $(document).ready(function () {
             htmlOutput += "<li>";
             htmlOutput += "<div class='col-4 box'>";
             htmlOutput += "<p>Rover name: " + roverInfoValue.name + "</p>"; // output rover name
+            htmlOutput += "<p>Launch date: " + roverInfoValue.launch_date + "</p>"; // output rover launch date
             htmlOutput += "<p>Landing date: " + roverInfoValue.landing_date + "</p>"; // output rover landing date
             htmlOutput += "<p>Destination: " + roverInfoValue.destination + "</p>"; // output rover destination
             htmlOutput += "<p>Current location: " + roverInfoValue.current_location + "</p>"; // output rover location
@@ -60,6 +64,7 @@ $(document).ready(function () {
             htmlOutput += "<img src='" + roverInfoValue.image + "'/>"; // display photo
             htmlOutput += "</a>"; // close link to full size photo
             htmlOutput += "<p>" + roverInfoValue.about + "</p>"; // display "about" info
+            htmlOutput += "<p class='detail'>Information from NASA's <a href='" + roverInfoValue.about_source + "'>Jet Propulsion Laboratory</a>.</p>";
             htmlOutput += "<form action='#' class='js-rover-select'>"; // open form with js targeting for rover selection
             var lowerCaseRoverName = roverInfoValue.name.toLowerCase();
             htmlOutput += "<input type='hidden' value='" + lowerCaseRoverName + "' class='inputRoverName'>";
@@ -121,7 +126,7 @@ $(document).ready(function () {
                 })
                 /* if the call is successful (status 200 OK) show results */
                 .done(function (result) {
-                    /* if the results are meeningful, we can just console.log them */
+                    /* if the results are meaningful, we can just console.log them */
                     console.log(result);
                     displaySearchResults(result.photos);
                 })
@@ -137,25 +142,31 @@ $(document).ready(function () {
 
         function displaySearchResults(resultsArray) {
             var htmlOutput = '';
-            htmlOutput += "Photos taken by the " + selectedRover.toUpperCase() + " rover";
-            $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
-                //                if ((resultsArrayKey + 1) % 3 == 0) {
-                //                    htmlOutput += "<div class='row'>";
-                //                }
-                htmlOutput += "<li>";
-                htmlOutput += "<div class='col-4 box'>";
-                console.log(resultsArrayValue.earth_date);
-                htmlOutput += "<p> Earth date: " + resultsArrayValue.earth_date + "</p>"; // output earth date
-                htmlOutput += "<p>Camera name: " + resultsArrayValue.camera.full_name + "</p>"; // output full camera name
-                htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank'>"; // open link to full size photo
-                htmlOutput += "<img src='" + resultsArrayValue.img_src + "'/>"; // display photo
-                htmlOutput += "</a>"; // close link to full size photo
-                htmlOutput += "</div>";
-                htmlOutput += "</li>";
-                //                if ((resultsArrayKey + 1) % 3 == 0) {
-                //                    htmlOutput += "</div>";
-                //                }
-            });
+            if (resultsArray == '') {
+                htmlOutput += "<p>Sorry, no photos available for this camera for this day.</p>";
+            } else {
+                htmlOutput += "<p>Photos taken by the " + selectedRover.toUpperCase() + " rover.</p>";
+                htmlOutput += "<p>Earth date: " + resultsArray[0].earth_date + "</p>";
+                htmlOutput += "<p>Click on any image to open the full-size version in a new window.</p>"
+                console.log(resultsArray);
+                console.log(resultsArray[0].camera.full_name);
+                console.log(resultsArray[0].earth_date);
+                $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
+                    htmlOutput += "<li>";
+                    htmlOutput += "<div class='col-4 box'>";
+                    console.log(resultsArrayValue.earth_date);
+                    //                htmlOutput += "<p> Earth date: " + resultsArrayValue.earth_date + "</p>"; // output earth date
+                    htmlOutput += "<p>Camera name: " + resultsArrayValue.camera.full_name + "</p>"; // output full camera name
+                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank'>"; // open link to full size photo
+                    htmlOutput += "<img src='" + resultsArrayValue.img_src + "'/>"; // display photo
+                    htmlOutput += "</a>"; // close link to full size photo
+                    htmlOutput += "</div>";
+                    htmlOutput += "</li>";
+                });
+            }
+            htmlOutput += "<div class='container'>";
+            htmlOutput += "<input type='button' value='Search Again' onClick='window.location.reload()'>";
+            htmlOutput += "</div>";
             $("#js-search-results ul").html(htmlOutput);
         }
     });
