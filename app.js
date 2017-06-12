@@ -8,7 +8,7 @@ var roverInfo = [
         "max_sol": 2208,
         "max_date": "2010-03-21",
         "total_photos": 124550,
-        "image": "https://www.jpl.nasa.gov/missions/web/mer.jpg",
+        "image": "https://mars.nasa.gov/images/rover21-full.jpg",
         "destination": "Gusev Crater, Mars",
         "current_location": "Troy, Mars",
         "about": "One of two rovers launched in 2003 to explore Mars and search for signs of past life, Spirit far outlasted her planned 90-day mission. Among her myriad discoveries, Spirit found evidence that Mars was once much wetter than it is today and helped scientists better understand the Martian wind.</p><p>In May 2009, the rover became embedded in soft soil at a site called \"Troy\" with only five working wheels to aid in the rescue effort. After months of testing and carefully planned maneuvers, NASA ended efforts to free the rover and eventually ended the mission on May 25, 2011.",
@@ -60,16 +60,15 @@ $(document).ready(function () {
             htmlOutput += "<p>Landing date: " + roverInfoValue.landing_date + "</p>"; // output rover landing date
             htmlOutput += "<p>Destination: " + roverInfoValue.destination + "</p>"; // output rover destination
             htmlOutput += "<p>Current location: " + roverInfoValue.current_location + "</p>"; // output rover location
-            htmlOutput += "<a href='" + roverInfoValue.image + "'>"; // open link to full size photo
-            htmlOutput += "<img src='" + roverInfoValue.image + "'/>"; // display photo
+            htmlOutput += "<a href='" + roverInfoValue.image + "' target = '_blank'>"; // open link to full size photo
+            htmlOutput += "<div class='image' style='background-image: url(" + roverInfoValue.image + ")'></div>";
             htmlOutput += "</a>"; // close link to full size photo
             htmlOutput += "<p>" + roverInfoValue.about + "</p>"; // display "about" info
-            htmlOutput += "<p class='detail'>Information from NASA's <a href='" + roverInfoValue.about_source + "'>Jet Propulsion Laboratory</a>.</p>";
+            htmlOutput += "<p class='detail'>Information from NASA's <a href='" + roverInfoValue.about_source + "' target='_blank'>Jet Propulsion Laboratory</a>.</p>";
             htmlOutput += "<form action='#' class='js-rover-select'>"; // open form with js targeting for rover selection
             var lowerCaseRoverName = roverInfoValue.name.toLowerCase();
             htmlOutput += "<input type='hidden' value='" + lowerCaseRoverName + "' class='inputRoverName'>";
             htmlOutput += "<button type='submit'>Select</button>";
-            //                        console.log(lowerCaseRoverName);
             htmlOutput += "</form>"; // close form
             htmlOutput += "</div>";
             htmlOutput += "</li>";
@@ -80,13 +79,11 @@ $(document).ready(function () {
     $('.js-rover-select').submit(function (event) {
         event.preventDefault();
         selectedRover = $(this).parent().find(".inputRoverName").val();
-        console.log(selectedRover);
         $('#js-rover-info').hide();
         $('#js-curiosity-search').hide();
         $('#js-opportunity-search').hide();
         $('#js-spirit-search').hide();
         $('#js-' + selectedRover + '-search').show();
-        //        console.log(event.target);
     });
 
 
@@ -98,17 +95,11 @@ $(document).ready(function () {
         $('#js-spirit-search').hide();
 
         var userEarthDate = $(this).parent().find('.js-earth-date-query').val();
-        //        var userEarthDate = "2015-04-12";
-        //console.log(userEarthDate);
         var userCamera = $(this).parent().find('.js-camera-query').val();
-        //        var userCamera = "MAST";
-        //console.log(userCamera);
         getResults(userEarthDate, userCamera);
         // step 2: make API call
 
         function getResults(desiredEarthDate, desiredCamera) {
-            console.log(desiredCamera);
-            console.log(desiredEarthDate);
 
             /* Update all the parameters for your API test*/
             var params = {
@@ -120,14 +111,11 @@ $(document).ready(function () {
                     /* update API end point */
                     url: "https://api.nasa.gov/mars-photos/api/v1/rovers/" + selectedRover + "/photos",
                     data: params,
-                    //dataType: "json",
                     /*set the call type GET / POST*/
                     type: "GET"
                 })
                 /* if the call is successful (status 200 OK) show results */
                 .done(function (result) {
-                    /* if the results are meaningful, we can just console.log them */
-                    console.log(result);
                     displaySearchResults(result.photos);
                 })
                 /* if the call is NOT successful show errors */
@@ -147,18 +135,13 @@ $(document).ready(function () {
             } else {
                 htmlOutput += "<p>Photos taken by the " + selectedRover.toUpperCase() + " rover.</p>";
                 htmlOutput += "<p>Earth date: " + resultsArray[0].earth_date + "</p>";
+                htmlOutput += "<p>Camera name: " + resultsArray[0].camera.full_name + "</p>"; // output full camera name
                 htmlOutput += "<p>Click on any image to open the full-size version in a new window.</p>"
-                console.log(resultsArray);
-                console.log(resultsArray[0].camera.full_name);
-                console.log(resultsArray[0].earth_date);
                 $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
                     htmlOutput += "<li>";
                     htmlOutput += "<div class='col-4 box'>";
-                    console.log(resultsArrayValue.earth_date);
-                    //                htmlOutput += "<p> Earth date: " + resultsArrayValue.earth_date + "</p>"; // output earth date
-                    htmlOutput += "<p>Camera name: " + resultsArrayValue.camera.full_name + "</p>"; // output full camera name
                     htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank'>"; // open link to full size photo
-                    htmlOutput += "<img src='" + resultsArrayValue.img_src + "'/>"; // display photo
+                    htmlOutput += "<div class='image' style='background-image: url(" + resultsArrayValue.img_src + ")'></div>";
                     htmlOutput += "</a>"; // close link to full size photo
                     htmlOutput += "</div>";
                     htmlOutput += "</li>";
@@ -171,7 +154,3 @@ $(document).ready(function () {
         }
     });
 });
-
-// TO DO: Make footer left-aligned.
-// TO DO: Make it possible to select a rover by clicking the "Select" button.
-// TO DO: Add space between NASA logo and search form after a rover is selected
