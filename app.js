@@ -131,7 +131,7 @@ $(document).ready(function () {
         function displaySearchResults(resultsArray) {
             var htmlOutput = '';
             if (resultsArray == '') {
-                htmlOutput += "<p>Sorry, no photos available for this camera for this day.</p>";
+                htmlOutput += "<p class="relevant-message">Sorry, no photos available for this camera for this day.</p>";
             } else {
                 htmlOutput += "<p>Photos taken by the " + selectedRover.toUpperCase() + " rover.</p>";
                 htmlOutput += "<p>Earth date: " + resultsArray[0].earth_date + "</p>";
