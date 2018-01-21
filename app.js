@@ -68,7 +68,7 @@ $(document).ready(function () {
             htmlOutput += "<form action='#' class='js-rover-select'>"; // open form with js targeting for rover selection
             var lowerCaseRoverName = roverInfoValue.name.toLowerCase();
             htmlOutput += "<input type='hidden' value='" + lowerCaseRoverName + "' class='inputRoverName'>";
-            htmlOutput += "<button type='submit'>Select</button>";
+            htmlOutput += "<button class='btn' type='submit'>Select</button>";
             htmlOutput += "</form>"; // close form
             htmlOutput += "</div>";
             htmlOutput += "</li>";
@@ -148,7 +148,7 @@ $(document).ready(function () {
                 });
             }
             htmlOutput += "<div class='container'>";
-            htmlOutput += "<input type='button' value='Search Again' onClick='window.location.reload()'>";
+            htmlOutput += "<input type='button' class='btn' value='Search Again' onClick='window.location.reload()'>";
             htmlOutput += "</div>";
             $("#js-search-results ul").html(htmlOutput);
         }
