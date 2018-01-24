@@ -139,14 +139,13 @@ $(document).ready(function () {
             if (resultsArray == '') {
                 htmlOutput += "<p class=\"relevant-message\">Sorry, no photos available for this camera for this day.</p>";
             } else {
-                htmlOutput += "<p>Photos taken by the " + selectedRover.toUpperCase() + " rover.</p>";
-                htmlOutput += "<p>Earth date: " + resultsArray[0].earth_date + "</p>";
-                htmlOutput += "<p>Camera name: " + resultsArray[0].camera.full_name + "</p>"; // output full camera name
-                htmlOutput += "<p>Click on any image to open the full-size version in a new window.</p>"
+                htmlOutput += "<p class=\"relevant-message\">Photos taken by the " + selectedRover.toUpperCase() + " rover.</p>";
+                htmlOutput += "<p class=\"relevant-message\">Earth date: " + resultsArray[0].earth_date + "</p>";
+                htmlOutput += "<p class=\"relevant-message\">Click on any image to open the full-size version in a new window.</p>"
                 $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
                     htmlOutput += "<li>";
                     htmlOutput += "<div class='col-4 box'>";
-                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank'>"; // open link to full size photo
+                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank' alt='" + resultsArray.camera.full_name"' title='" + resultsArray.camera.full_name"'>"; // open link to full size photo
                     htmlOutput += "<div class='image' style='background-image: url(" + resultsArrayValue.img_src + ")'></div>";
                     htmlOutput += "</a>"; // close link to full size photo
                     htmlOutput += "</div>";
