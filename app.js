@@ -96,17 +96,22 @@ $(document).ready(function () {
 
         var userEarthDate = $(this).parent().find('.js-earth-date-query').val();
         var userCamera = $(this).parent().find('.js-camera-query').val();
-        getResults(userEarthDate, userCamera);
+        if (userCamera == 'ALL') {
+            getResults(userEarthDate);
+        } else {
+            getResults(userEarthDate, userCamera);
+        }
         // step 2: make API call
-
         function getResults(desiredEarthDate, desiredCamera) {
 
-            /* Update all the parameters for your API test*/
+            /* Update all the parameters for the API test*/
             var params = {
                 earth_date: desiredEarthDate,
-                camera: desiredCamera,
                 api_key: 'OihgoSdCwSWjp0EmQpb2wgBGVkLQXwZ5jmb2DDSd'
             };
+            if (desiredCamera) {
+                params.camera = desiredCamera;
+            }
             var result = $.ajax({
                     /* update API end point */
                     url: "https://api.nasa.gov/mars-photos/api/v1/rovers/" + selectedRover + "/photos",

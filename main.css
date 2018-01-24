@@ -101,6 +101,7 @@ a:hovered {
     border: 1px solid transparent;
     border-radius: 4px;
     padding: 5px;
+    font-family: 'Baumans', cursive;
 }
 
 footer {
