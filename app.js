@@ -121,7 +121,6 @@ $(document).ready(function () {
                 })
                 /* if the call is successful (status 200 OK) show results */
                 .done(function (result) {
-                    console.log(result);
                     displaySearchResults(result.photos);
                 })
                 /* if the call is NOT successful show errors */
@@ -145,7 +144,7 @@ $(document).ready(function () {
                 $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
                     htmlOutput += "<li>";
                     htmlOutput += "<div class='col-4 box'>";
-                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank' alt='" + resultsArray.camera.full_name"' title='" + resultsArray.camera.full_name"'>"; // open link to full size photo
+                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank' alt='" + resultsArray.camera.full_name"' title='" + resultsArray.camera.full_name + "'>"; // open link to full size photo
                     htmlOutput += "<div class='image' style='background-image: url(" + resultsArrayValue.img_src + ")'></div>";
                     htmlOutput += "</a>"; // close link to full size photo
                     htmlOutput += "</div>";
