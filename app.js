@@ -144,7 +144,7 @@ $(document).ready(function () {
                 $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
                     htmlOutput += "<li>";
                     htmlOutput += "<div class='col-4 box'>";
-                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='blank' alt='" + resultsArray.camera.full_name"' title='" + resultsArray.camera.full_name + "'>"; // open link to full size photo
+                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='_blank' alt='" + resultsArray.camera.full_name + "' title='" + resultsArray.camera.full_name + "'>"; // open link to full size photo
                     htmlOutput += "<div class='image' style='background-image: url(" + resultsArrayValue.img_src + ")'></div>";
                     htmlOutput += "</a>"; // close link to full size photo
                     htmlOutput += "</div>";
