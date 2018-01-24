@@ -121,6 +121,7 @@ $(document).ready(function () {
                 })
                 /* if the call is successful (status 200 OK) show results */
                 .done(function (result) {
+                    console.log(result);
                     displaySearchResults(result.photos);
                 })
                 /* if the call is NOT successful show errors */
