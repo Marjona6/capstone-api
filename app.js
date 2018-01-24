@@ -121,7 +121,6 @@ $(document).ready(function () {
                 })
                 /* if the call is successful (status 200 OK) show results */
                 .done(function (result) {
-                    console.log(result);
                     displaySearchResults(result.photos);
                 })
                 /* if the call is NOT successful show errors */
@@ -143,10 +142,9 @@ $(document).ready(function () {
                 htmlOutput += "<p class=\"relevant-message\">Earth date: " + resultsArray[0].earth_date + "</p>";
                 htmlOutput += "<p class=\"relevant-message\">Click on any image to open the full-size version in a new window.</p>"
                 $.each(resultsArray, function (resultsArrayKey, resultsArrayValue) {
-                    console.log(resultsArrayKey, resultsArrayValue);
                     htmlOutput += "<li>";
                     htmlOutput += "<div class='col-4 box'>";
-                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='_blank' alt='" + resultsArray.camera.full_name + "' title='" + resultsArray.camera.full_name + "'>"; // open link to full size photo
+                    htmlOutput += "<a href='" + resultsArrayValue.img_src + "' target='_blank' alt='" + resultsArrayValue.camera.full_name + "' title='" + resultsArrayValue.camera.full_name + "'>"; // open link to full size photo
                     htmlOutput += "<div class='image' style='background-image: url(" + resultsArrayValue.img_src + ")'></div>";
                     htmlOutput += "</a>"; // close link to full size photo
                     htmlOutput += "</div>";
